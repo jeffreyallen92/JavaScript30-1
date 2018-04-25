@@ -136,10 +136,10 @@
     const panels = document.querySelectorAll('.panel');
 
     function toggleOpen(){
-      console.log('open')
       this.classList.toggle('open');
     }
 
+    // brings text from above and below
     function toggleActive(e){
       if(e.propertyName.includes('flex')){
         this.classList.toggle('open-active');
