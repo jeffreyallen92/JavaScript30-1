@@ -6,7 +6,61 @@
 </head>
 <body>
 <canvas id="draw" width="800" height="800"></canvas>
+
 <script>
+
+	const canvas = document.querySelector('#draw');
+	const ctx = canvas.getContext('2d');
+
+	canvas.width = window.innerWidth;
+	canvas.eight = window.innerHeight;
+	ctx.strokeStyle = '#BADASS';
+	ctx.lineJoin = 'round';
+	ctx.lineCap = 'round';
+	ctx.lineWidth = 100;
+	ctx.globalCompositeOperation = 'multiply';
+
+	// flag for when mouse is clicked down
+	let isDrawing = false;
+
+	let lastX = 0;
+	let lastY = 0;
+	let hue = 0;
+	let direction = true;
+
+	function draw(e){ // stop the function from running when they are not moused down
+		if(!isDrawing){
+			return
+		}
+		console.log(e);
+		ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
+		ctx.beginPath();
+		ctx.moveTo(lastX, lastY);
+		ctx.lineTo(e.offsetX, e.offsetY);
+		ctx.stroke();
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+
+		// Make the line change colors
+		hue++;
+		hue = hue > 360 ? 0 : hue;
+
+		// Make the direction in which the line width increase/decrease change
+		if(ctx.lineWidth >= 100 || ctx.lineWidth <= 1){
+			direction = !direction;
+		}
+
+		direction ? ctx.lineWidth++ : ctx.lineWidth--;
+	}
+
+	canvas.addEventListener('mousedown', (e) => {
+		isDrawing = true;
+		// Start where the mouse was clicked down instead of at (0,0)
+		[lastX, lastY] = [e.offsetX, e.offsetY];
+	});
+	canvas.addEventListener('mousemove', draw);
+	canvas.addEventListener('mouseup', () => isDrawing = false);
+	canvas.addEventListener('mouseout', () => isDrawing = false);
+
 </script>
 
 <style>
