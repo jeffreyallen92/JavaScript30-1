@@ -7,6 +7,23 @@
 </head>
 <body>
 <script>
+
+	const pressed = [];
+	const secretCode = 'jeffallen';
+
+	window.addEventListener('keyup', (e) => {
+		pressed.push(e.key);
+		// splice(start position[, delete count[, eleToAdd1, eleToAdd2, eleToAdd3...]])
+		pressed.splice(-secretCode.length - 1, pressed.length - secretCode.length);
+		console.log(pressed);
+
+		// pressed.join('') <--- easy way to convert an array to a string
+		if(pressed.join('').includes(secretCode)){
+			console.info('oooooooo welcome to the secret place');
+			cornify_add(); // lmaooo
+		}
+	});
+
 </script>
 </body>
 </html>
